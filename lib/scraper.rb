@@ -4,12 +4,15 @@ require 'pry'
 class Scraper
 
   def self.scrape_index_page(index_url)
-    html = File.read('./fixtures/student-site/index.html')
-    Scraper = Nokogiri::HTML(html)
+    doc = Nokogiri::HTML(open(index_url))
 
     students = []
 
-    Scraper.css("student-card").each do |student|
+    doc.css("div.student-card").each do |student|
+      name = student.css(".student-name").text
+      location = student.css(".student-location").text
+      profile_url = student.css("a").attribute("href").value
+
 
   end
 
